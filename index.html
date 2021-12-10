@@ -1,46 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="calc">
-        <div class="calc-screen">
-            <p>0</p>
+    <form action="">
+        <h1 title="Форма регистрации на сайте">Регистрация</h1>
+        <div class="group">
+            <label for="">Имя пользователя:</label>
+            <input type="name" id="name">
         </div>
-        <div class="buttons">
-            <div class="btn ac bg-grey">ac</div>
-            <div class="btn plus-minus bg-grey">+/-</div>
-            <div class="btn percent bg-grey">%</div>
-            <div class="btn division bg-orange">/</div>
-
-            <div class="btn seven">7</div>
-            <div class="btn eigth">8</div>
-            <div class="btn nine">9</div>
-            <div class="btn multiply bg-orange">X</div>
-
-            <div class="btn four">4</div>
-            <div class="btn five">5</div>
-            <div class="btn six">6</div>
-            <div class="btn minus bg-orange">-</div>
-
-            <div class="btn one">1</div>
-            <div class="btn two">2</div>
-            <div class="btn three">3</div>
-            <div class="btn plus bg-orange">+</div>
-
-            <div class="btn zero">0</div>
-            <div class="btn dot">.</div>
-            <div class="btn equal bg-orange">=</div>
+        <div class="group">
+            <label for="">Пароль:</label>
+            <input type="password_1" id="password">
         </div>
-    </div>
-    <script src="js/calc.js"></script>
+        <div class="group">
+            <label for="">Пароль еще раз:</label>
+            <input type="password_1" id="passwordRepeat">
+        </div>
+        <div class="group">
+            <input type="button" value="Регистрация" onclick="regist()">
+        </div>
+    </form>
+    <h1 id='active_name'></h1>
+    <p id="error"></p>
+    <center><input type="button" onclick="rem()"></center>
 </body>
+<script>
+    function regist() {
+        let name = document
+            .getElementById('name')
+            .value;
+        let password = document
+            .getElementById('password')
+            .value;
+        if (localStorage.getItem(name) == null) {
+            let new_user = {
+                user_name: name,
+                user_password: password
+            }
+            localStorage.setItem(new_user.user_name, JSON.stringify(new_user));
+            localStorage.setItem("active_user", new_user.user_name)
+            document
+                .getElementById('active_name')
+                .textContent = localStorage['active_user']
+            console.info("Новый пользователь добавлен")
+        } else {
+            console.info("Такой пользователь уже есть")
+        }
+    }
+
+    function rem() {
+        localStorage.removeItem('active_user')
+        document
+            .getElementById("active_name")
+            .textContent = ' '
+    }
+</script>
 
 </html>
